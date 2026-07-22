@@ -63,7 +63,7 @@ export const Footer = ({ setActiveTab }) => {
             <div className="flex flex-col gap-2.5 mt-2">
               <div className="flex items-center gap-3 text-sm">
                 <Mail size={16} className="text-secondary" />
-                <span className="hover:text-white transition-colors">contact.codenpixels.com</span>
+                <span className="hover:text-white transition-colors">codenpixel.2022@gmail.com</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Phone size={16} className="text-secondary" />
