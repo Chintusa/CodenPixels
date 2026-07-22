@@ -29,7 +29,7 @@ export const Footer = ({ setActiveTab }) => {
     <footer id="main-footer" className="bg-[#0F172A]/95 backdrop-blur-md text-slate-300 border-t border-white/5 relative z-10 pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10">
       {/* Decorative vertical coordinates overlay to give agency aesthetic depth */}
       <div className="absolute left-8 bottom-32 text-[10px] font-mono text-slate-700 tracking-widest uppercase rotate-90 select-none hidden xl:block">
-        CP : CORP : EST_2022
+        {/* CP : CORP : EST_2022 */}
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -124,8 +124,8 @@ export const Footer = ({ setActiveTab }) => {
                 <li key={index}>
                   <button
                     onClick={() => {
-                      setActiveTab('services');
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      // setActiveTab('services');
+                      // window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
                     className="hover:text-white transition-all text-slate-400 text-left hover:translate-x-1 cursor-pointer flex items-center gap-1 group"
                   >
@@ -138,7 +138,7 @@ export const Footer = ({ setActiveTab }) => {
           </div>
 
           {/* Column 4: Newsletter Box */}
-          {/* <div>
+           <div>
             <h3 className="text-white font-display font-semibold text-sm tracking-wider uppercase mb-6">
               Stay Updated
             </h3>
@@ -174,7 +174,7 @@ export const Footer = ({ setActiveTab }) => {
                 <span className="text-xs text-red-400 font-medium">{error}</span>
               )}
             </div>
-          </div> */}
+          </div> 
         </div>
 
         {/* Divider & Copyright */}
