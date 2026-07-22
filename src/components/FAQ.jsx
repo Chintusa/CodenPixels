@@ -38,7 +38,7 @@ export const FAQ = () => {
       </div>
 
       <div className="absolute right-12 bottom-[12%] text-primary/10 font-mono text-[7px] hidden lg:block pointer-events-none select-none">
-        <span>SECURITY_KEY: SHA256_RSA_ENC_VALIDATED // OK</span>
+        {/* <span>SECURITY_KEY: SHA256_RSA_ENC_VALIDATED // OK</span> */}
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

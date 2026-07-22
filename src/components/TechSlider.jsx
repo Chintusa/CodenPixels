@@ -26,7 +26,7 @@ export const TechSlider = () => {
 
       {/* Cybernetic code grid watermark */}
       <div className="absolute left-[5%] top-[10%] opacity-15 text-[#06B6D4] font-mono text-[7px] hidden lg:block pointer-events-none select-none">
-        <span>// RUNTIME_GRID_INDEX: [OK]</span>
+        {/* <span>// RUNTIME_GRID_INDEX: [OK]</span> */}
       </div>
 
       <div className="absolute right-[5%] bottom-[10%] opacity-10 text-primary font-mono text-[7px] hidden lg:block pointer-events-none select-none">

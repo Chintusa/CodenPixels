@@ -14,7 +14,7 @@ export const Testimonials = () => {
 
       {/* Decorative Blueprint watermark on Testimonials */}
       <div className="absolute top-10 left-10 opacity-15 text-[#06B6D4] font-mono text-[7px] hidden lg:block pointer-events-none select-none">
-        <span>[SYS_METRIC: SUCCESS_RATIO_100%] // AUTH_VALID : TRUE</span>
+        {/* <span>[SYS_METRIC: SUCCESS_RATIO_100%] // AUTH_VALID : TRUE</span> */}
       </div>
 
       <div className="absolute bottom-10 right-10 opacity-10 text-primary hidden lg:block pointer-events-none select-none">

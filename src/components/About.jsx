@@ -64,7 +64,7 @@ export const About = ({ setActiveTab }) => {
 
       {/* Grid Coordinates watermark */}
       <div className="absolute top-8 right-12 opacity-20 text-[#2563EB] font-mono text-[7px] hidden lg:block pointer-events-none select-none">
-        <span>LOC_COORDS: [32.7441, -117.1611] // REG: CAL_GRID</span>
+        {/* <span>LOC_COORDS: [32.7441, -117.1611] // REG: CAL_GRID</span> */}
       </div>
 
       <div className="absolute left-[3%] top-[35%] opacity-[0.25] text-primary hidden lg:block pointer-events-none select-none">
@@ -99,7 +99,7 @@ export const About = ({ setActiveTab }) => {
           {/* Tabs Navigation */}
           <div className="lg:col-span-4 bg-white/20 p-5 sm:p-6 md:p-8 flex flex-col justify-between border-r border-white/20">
             <div>
-              <h3 className="text-xs font-mono tracking-widest text-slate-450 uppercase mb-4 sm:mb-6">// OUR STORY</h3>
+              <h3 className="text-xs font-mono tracking-widest text-slate-450 uppercase mb-4 sm:mb-6"> OUR STORY</h3>
               <div className="flex flex-col gap-2">
                 {Object.keys(storySegments).map((key) => (
                   <button
@@ -119,7 +119,9 @@ export const About = ({ setActiveTab }) => {
             </div>
             
             <div className="mt-6 pt-4 border-t border-slate-200/80 hidden lg:block">
-              <span className="text-[10px] font-mono text-slate-400">STATUS: CORE OPERATION LIVE</span>
+              <span className="text-[10px] font-mono text-slate-400">
+                {/* STATUS: CORE OPERATION LIVE */}
+                </span>
             </div>
           </div>
 
@@ -154,7 +156,8 @@ export const About = ({ setActiveTab }) => {
               "Deliver innovative digital solutions that empower businesses."
             </p>
             <p className="mt-2 text-[10px] text-slate-400 leading-relaxed font-mono">
-              // METHOD : BEAST-GRID STABILITY // CORE_STANDARD_REV_1 //
+              METHOD : BEAST-GRID STABILITY 
+              {/* CORE_STANDARD_REV_1  */}
             </p>
           </div>
 
@@ -171,7 +174,7 @@ export const About = ({ setActiveTab }) => {
               "Become a trusted technology partner worldwide."
             </p>
             <p className="mt-2 text-[10px] text-slate-400 leading-relaxed font-mono">
-              // OUTCOME : LONG-TERM ARCHITECTURAL AUTONOMY //
+              OUTCOME : LONG-TERM ARCHITECTURAL AUTONOMY 
             </p>
           </div>
 

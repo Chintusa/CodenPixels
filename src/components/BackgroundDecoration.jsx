@@ -19,8 +19,8 @@ export const BackgroundDecoration = () => {
         }}
       />
 
-      {/* 2. Floating Technical Grid Crosshairs Staggered Down the Scroll View */}
-      {/* Upper Left Grid Accent */}
+      {/*2. Floating Technical Grid Crosshairs Staggered Down the Scroll View */}
+      {/* Upper Left Grid accent */}
       <div className="absolute top-[12%] left-[4%] opacity-[0.25] text-primary">
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
           <line x1="20" y1="0" x2="20" y2="40" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />

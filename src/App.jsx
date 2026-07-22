@@ -59,7 +59,7 @@ export default function App() {
                 <div className="max-w-7xl mx-auto px-6">
                   <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-16">
                     <div>
-                      <span className="text-xs font-mono font-bold text-primary uppercase tracking-wider">// BRIEF CATALOGUE</span>
+                      {/* <span className="text-xs font-mono font-bold text-primary uppercase tracking-wider">// BRIEF CATALOGUE</span> */}
                       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-slate-900 tracking-tight mt-2">What We Engineer Best</h2>
                     </div>
                     <button
@@ -84,7 +84,7 @@ export default function App() {
                 <div className="max-w-7xl mx-auto px-6">
                   <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-16">
                     <div>
-                      <span className="text-xs font-mono font-bold text-secondary uppercase tracking-wider">// CURATED PREVIEW</span>
+                      {/* <span className="text-xs font-mono font-bold text-secondary uppercase tracking-wider">// CURATED PREVIEW</span> */}
                       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-slate-900 tracking-tight mt-2">Our Staged Deliverables</h2>
                     </div>
                     <button

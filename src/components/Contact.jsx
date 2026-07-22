@@ -213,7 +213,9 @@ const [loading, setLoading] = useState(false); // This state checks whether the 
       </div>
 
       <div className="absolute left-8 bottom-12 opacity-25 text-[#06B6D4] font-mono text-[7px] hidden lg:block pointer-events-none select-none">
-        <span>STACT_TR: /STAGED/STRATEGY_VAL_REG_04</span>
+        <span>
+          {/* STACT_TR: /STAGED/STRATEGY_VAL_REG_04 */}
+          </span>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -238,7 +240,7 @@ const [loading, setLoading] = useState(false); // This state checks whether the 
           {/* Left Column: Interactive Estimator Panel */}
           <div className="lg:col-span-5 bg-white/40 backdrop-blur-md border border-white/40 shadow-lg rounded-3xl p-5 sm:p-6 md:p-8 animate-fadeIn">
             <span className="text-slate-400 font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-widest">
-              // PROJECT ESTIMATOR
+              {/* // PROJECT ESTIMATOR */}
             </span>
 
             <div className="flex items-center gap-2 mt-3.5 sm:mt-4 mb-5 sm:mb-6">
@@ -313,7 +315,7 @@ const [loading, setLoading] = useState(false); // This state checks whether the 
             {/* Calculated summary panel */}
             <div className="bg-white/55 backdrop-blur-sm border border-white/35 p-4 sm:p-6 rounded-2xl mb-5 sm:mb-6 shadow-sm">
               <span className="text-[9px] sm:text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest block mb-3 sm:mb-4">
-                // CALCULATED SUMMARY
+                {/* // CALCULATED SUMMARY */}
               </span>
 
               <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4">
@@ -364,7 +366,7 @@ const [loading, setLoading] = useState(false); // This state checks whether the 
           <div className="lg:col-span-7 h-full" id="actual-contact-form">
             <div className="bg-white/40 backdrop-blur-md border border-white/40 p-5 sm:p-8 md:p-10 shadow-lg rounded-3xl relative animate-fadeIn">
               <span className="text-slate-400 font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-widest block mb-3 sm:mb-4">
-                // CONTACT_FORM_v4
+                {/* // CONTACT_FORM_v4 */}
               </span>
 
               {success ? (

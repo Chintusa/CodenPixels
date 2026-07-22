@@ -115,7 +115,7 @@ export const Projects = () => {
 
                   {/* Text Meta */}
                   <span className="text-xs font-mono font-semibold text-slate-400">
-                    // TYPE : {project.type.toUpperCase()}
+                    {/* // TYPE : {project.type.toUpperCase()} */}
                   </span>
 
                   <h3 className="mt-1 text-lg font-display font-bold text-slate-900 group-hover:text-primary transition-colors">
@@ -204,12 +204,12 @@ export const Projects = () => {
                     {selectedProject.name}
                   </h3>
 
-                  <div className="mt-2 text-xs text-slate-400 font-mono">
+                  {/* <div className="mt-2 text-xs text-slate-400 font-mono">
                     Type:{' '}
                     <span className="text-slate-600 font-bold">
                       {selectedProject.type}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Graphic Image Banner in Modal */}
@@ -226,7 +226,7 @@ export const Projects = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="md:col-span-2">
                     <h4 className="text-xs font-mono font-bold text-slate-400 uppercase mb-2">
-                      // PROJECT OVERVIEW
+                      PROJECT OVERVIEW
                     </h4>
 
                     <p className="text-slate-600 text-sm md:text-base leading-relaxed font-sans">
@@ -236,7 +236,7 @@ export const Projects = () => {
 
                   <div>
                     <h4 className="text-xs font-mono font-bold text-slate-400 uppercase mb-3">
-                      // PROJECT STACK
+                      PROJECT STACK
                     </h4>
 
                     <div className="flex flex-wrap gap-1.5">
@@ -252,7 +252,7 @@ export const Projects = () => {
 
                     <div className="mt-6">
                       <h4 className="text-xs font-mono font-bold text-slate-400 uppercase mb-2">
-                        // STATUS
+                        STATUS
                       </h4>
 
                       <div className="flex items-center gap-1.5 text-xs text-[#06B6D4] font-semibold">

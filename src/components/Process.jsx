@@ -177,7 +177,7 @@ MON: OK`}</pre>
                     </div>
 
                     <span className="text-[10px] sm:text-xs font-mono text-slate-400 uppercase tracking-widest">
-                      // PHASE_STG : 0{stepItem.step}
+                      PHASE : 0{stepItem.step}
                     </span>
 
                     <h3 className="mt-1 text-xl sm:text-2xl md:text-3xl font-display font-bold sm:font-extrabold text-slate-900 tracking-tight leading-tight">

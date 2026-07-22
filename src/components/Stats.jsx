@@ -90,7 +90,7 @@ export const Stats = () => {
       <div className="absolute bottom-1/4 -right-10 w-44 h-44 bg-[#06B6D4]/5 rounded-full blur-2xl pointer-events-none select-none" />
 
       <div className="absolute top-4 right-10 text-slate-350 opacity-20 font-mono text-[7px] hidden lg:block pointer-events-none select-none">
-        <span>STATISTICAL_CORE_LOAD: 100% // ENG_OK</span>
+        {/* <span>STATISTICAL_CORE_LOAD: 100% // ENG_OK</span> */}
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -109,7 +109,7 @@ export const Stats = () => {
 
                 <div className="pt-2">
                   <span className="text-slate-400 font-mono text-[10px] sm:text-xs font-semibold select-none">
-                    // STAT : {stat.id.toUpperCase()}
+                    {/* // STAT : {stat.id.toUpperCase()} */}
                   </span>
                   
                   <div className="mt-3 sm:mt-4 flex items-baseline gap-0.5 sm:gap-1">
