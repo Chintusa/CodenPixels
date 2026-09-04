@@ -21,7 +21,7 @@ Official website and digital service portal for **CodeNPixels** ([https://codenp
   - 3D Recent Works Showcase Carousel with live demo links and tech stacks.
   - Client Success Stories Carousel with verified customer photos, star ratings, and product tags.
 - **Client-Side Admin Console (`/admin`)**: Zero-backend content management with localStorage persistence and JSON backup/restore for client reviews, portfolio projects, and service pricing tiers.
-- **Serverless SMTP Email Gateway**: Netlify Serverless Functions powered by Nodemailer for real-time inquiry lead alerts and automated customer confirmation receipts.
+- **Serverless SMTP Email Gateway**: Vercel Serverless Functions (`api/send-mail.js`) and Netlify Functions powered by Nodemailer for real-time inquiry lead alerts and automated customer confirmation receipts.
 - **Technical SEO & SSG Prerendering**: Pre-rendered static HTML routes with dynamic JSON-LD Schema.org graphs, canonical URLs, descriptive OpenGraph tags, XML sitemap, and robots.txt.
 
 ---
@@ -34,8 +34,8 @@ Official website and digital service portal for **CodeNPixels** ([https://codenp
 | **Styling** | Tailwind CSS 4 |
 | **Animations & Icons** | Motion (`motion/react`), Lucide React |
 | **Rendering Strategy** | Static Site Generation (SSG) with Node.js Prerender Pipeline |
-| **Serverless Functions**| Netlify Functions + Nodemailer (SMTP) |
-| **Hosting & CDN** | Netlify |
+| **Serverless Functions**| Vercel Serverless Functions (`/api/send-mail`) / Netlify Functions + Nodemailer (SMTP) |
+| **Hosting & CDN** | Vercel / Netlify |
 
 ---
 
@@ -43,43 +43,46 @@ Official website and digital service portal for **CodeNPixels** ([https://codenp
 
 ```text
 Codenpixels/
+├── api/
+│   └── send-mail.js         # Vercel serverless SMTP mail handler (/api/send-mail)
 ├── netlify/
 │   └── functions/
-│       └── send-mail.js         # Netlify serverless SMTP mail handler
+│       └── send-mail.js     # Netlify serverless SMTP mail handler
 ├── public/
-│   ├── google*.html             # Search Console verification file
-│   ├── logo.png                 # Brand logo asset
-│   ├── og-image.jpg             # Social sharing preview card
-│   ├── robots.txt               # Search crawler directives
-│   └── sitemap.xml              # XML URL sitemap index
+│   ├── google*.html         # Search Console verification file
+│   ├── logo.png             # Brand logo asset
+│   ├── og-image.jpg         # Social sharing preview card
+│   ├── robots.txt           # Search crawler directives
+│   └── sitemap.xml          # XML URL sitemap index
 ├── scripts/
-│   ├── prerender.js             # SSG static HTML pre-rendering pipeline
-│   └── verify-routes.js         # Automated SEO, metadata & route validation
+│   ├── prerender.js         # SSG static HTML pre-rendering pipeline
+│   └── verify-routes.js     # Automated SEO, metadata & route validation
 ├── src/
 │   ├── components/
-│   │   ├── About.jsx            # Company narrative & philosophy
-│   │   ├── AdminDashboard.jsx   # Client-side reviews/projects/pricing console
-│   │   ├── Contact.jsx          # Interactive cost estimator & inquiry intake form
-│   │   ├── FAQ.jsx              # Frequently asked questions accordion
-│   │   ├── Footer.jsx           # Corporate navigation & branding
-│   │   ├── Hero.jsx             # Hero section with dynamic CTA
-│   │   ├── Navbar.jsx           # Sticky glassmorphic navigation bar
-│   │   ├── Process.jsx          # 7-Step delivery lifecycle
-│   │   ├── Projects.jsx         # Filterable portfolio project gallery
-│   │   ├── ServiceDetail.jsx    # Dedicated detail layout for each service
-│   │   ├── Services.jsx         # Services catalogue with pricing tiers
-│   │   ├── Testimonials.jsx     # Customer reviews carousel with client photos
-│   │   └── WorkCarousel.jsx     # 3D interactive recent works slider
+│   │   ├── About.jsx        # Company narrative & philosophy
+│   │   ├── AdminDashboard.jsx # Client-side reviews/projects/pricing console
+│   │   ├── Contact.jsx      # Interactive cost estimator & inquiry intake form
+│   │   ├── FAQ.jsx          # Frequently asked questions accordion
+│   │   ├── Footer.jsx       # Corporate navigation & branding
+│   │   ├── Hero.jsx         # Hero section with dynamic CTA
+│   │   ├── Navbar.jsx       # Sticky glassmorphic navigation bar
+│   │   ├── Process.jsx      # 7-Step delivery lifecycle
+│   │   ├── Projects.jsx     # Filterable portfolio project gallery
+│   │   ├── ServiceDetail.jsx # Dedicated detail layout for each service
+│   │   ├── Services.jsx     # Services catalogue with pricing tiers
+│   │   ├── Testimonials.jsx # Customer reviews carousel with client photos
+│   │   └── WorkCarousel.jsx # 3D interactive recent works slider
 │   ├── utils/
-│   │   └── storage.js           # Client-side CRUD & sync storage controller
-│   ├── App.jsx                  # Single Page Application router
-│   ├── data.js                  # Master dataset (services, projects, reviews)
-│   ├── entry-server.jsx         # SSR rendering entry point
-│   ├── index.css                # Global design system & Tailwind styles
-│   └── main.jsx                 # Client mounting entry point
-├── netlify.toml                 # Netlify deployment & routing configuration
-├── package.json                 # Dependencies & project scripts
-└── vite.config.ts               # Vite configuration & dev server functions plugin
+│   │   └── storage.js       # Client-side CRUD & sync storage controller
+│   ├── App.jsx              # Single Page Application router
+│   ├── data.js              # Master dataset (services, projects, reviews)
+│   ├── entry-server.jsx     # SSR rendering entry point
+│   ├── index.css            # Global design system & Tailwind styles
+│   └── main.jsx             # Client mounting entry point
+├── vercel.json              # Vercel deployment, SSG routing & security headers
+├── netlify.toml             # Netlify deployment & routing configuration
+├── package.json             # Dependencies & project scripts
+└── vite.config.ts           # Vite configuration & dev server functions plugin
 ```
 
 ---
@@ -120,7 +123,7 @@ Start the local Vite development server:
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser. The local development server automatically intercepts `/api/send-mail` and runs the serverless function handler locally.
 
 ---
 
@@ -146,11 +149,27 @@ Serves the compiled `dist/` output locally on [http://localhost:4173](http://loc
 
 ---
 
-## 🌐 Deployment (Netlify)
+## 🌐 Deployment
 
-This project is configured for one-click deployment on **Netlify**:
+### Deploying on Vercel (Recommended)
+1. Import your GitHub repository into [Vercel](https://vercel.com).
+2. Vercel automatically detects configuration from `vercel.json`:
+   - **Framework Preset**: Vite
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+3. Add your SMTP credentials under **Project Settings > Environment Variables**:
+   - `SMTP_HOST`: `smtp.gmail.com`
+   - `SMTP_PORT`: `587`
+   - `SMTP_SECURE`: `false`
+   - `SMTP_USER`: `codenpixel.2022@gmail.com`
+   - `SMTP_PASS`: `your_app_password`
+   - `CONTACT_RECEIVER_EMAIL`: `codenpixel.2022@gmail.com`
+   - `SMTP_FROM_NAME`: `CodeNPixels Client Portal`
+   - `SMTP_SEND_AUTOREPLY`: `true`
+4. Deploy the project.
 
-1. Link your GitHub repository to Netlify.
+### Deploying on Netlify
+1. Link your GitHub repository to [Netlify](https://netlify.com).
 2. Netlify will auto-detect settings from `netlify.toml`:
    - **Build Command**: `npm run build`
    - **Publish Directory**: `dist`

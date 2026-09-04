@@ -169,12 +169,12 @@ export const Contact = ({ onNavigate, isStandalone = false }) => {
     };
 
     try {
-      // Primary: Call Netlify Serverless SMTP Function
+      // Primary: Call Vercel Serverless SMTP Function (/api/send-mail)
       let isSuccess = false;
       let errorMsg = '';
 
       try {
-        const netlifyResponse = await fetch('/.netlify/functions/send-mail', {
+        const vercelResponse = await fetch('/api/send-mail', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -183,22 +183,46 @@ export const Contact = ({ onNavigate, isStandalone = false }) => {
           body: JSON.stringify(payload)
         });
 
-        if (netlifyResponse.ok) {
-          const netlifyResult = await netlifyResponse.json();
-          if (netlifyResult.success) {
+        if (vercelResponse.ok) {
+          const vercelResult = await vercelResponse.json();
+          if (vercelResult.success) {
             isSuccess = true;
           } else {
-            errorMsg = netlifyResult.error || 'Serverless mail delivery failed.';
+            errorMsg = vercelResult.error || 'Serverless mail delivery failed.';
           }
         }
       } catch (fnErr) {
-        // If serverless endpoint is not hosted locally, proceed to fallback
-        console.warn('Netlify function not available locally, trying fallback gateway...', fnErr);
+        console.warn('Vercel API endpoint not reached, trying Netlify / fallback gateway...', fnErr);
       }
 
-      // Secondary / Fallback: Web3Forms Gateway
+      // Secondary: Try Netlify Serverless Function if on Netlify
+      if (!isSuccess && !errorMsg) {
+        try {
+          const netlifyResponse = await fetch('/.netlify/functions/send-mail', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (netlifyResponse.ok) {
+            const netlifyResult = await netlifyResponse.json();
+            if (netlifyResult.success) {
+              isSuccess = true;
+            } else {
+              errorMsg = netlifyResult.error || 'Netlify mail delivery failed.';
+            }
+          }
+        } catch (netErr) {
+          console.warn('Netlify endpoint not reached, trying Web3Forms fallback...', netErr);
+        }
+      }
+
+      // Tertiary / Fallback: Web3Forms Gateway
       if (!isSuccess) {
-        const fallbackResponse = await fetch('https://api.web3forms.com/submit', {
+        const fallbackResponse = await fetch('https://api.web3Forms.com/submit'.toLowerCase(), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

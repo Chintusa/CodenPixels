@@ -6,11 +6,55 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-function netlifyFunctionsPlugin(): Plugin {
+function serverlessDevPlugin(): Plugin {
   return {
-    name: 'netlify-functions-dev',
+    name: 'serverless-functions-dev',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
+        // 1. Handle Vercel API endpoints (/api/*)
+        if (req.url && req.url.startsWith('/api/')) {
+          const apiName = req.url.replace('/api/', '').split('?')[0];
+          try {
+            const apiPath = path.resolve(__dirname, `api/${apiName}.js`);
+            const apiModule = await import(/* @vite-ignore */ `file://${apiPath}?t=${Date.now()}`);
+            const handler = apiModule.default || apiModule.handler;
+            if (handler) {
+              let body = '';
+              req.on('data', (chunk: Buffer) => {
+                body += chunk.toString();
+              });
+              req.on('end', async () => {
+                try {
+                  (req as any).body = body ? JSON.parse(body) : {};
+                } catch {
+                  (req as any).body = body;
+                }
+
+                // Polyfill Vercel Response helpers
+                (res as any).status = function (code: number) {
+                  res.statusCode = code;
+                  return res;
+                };
+                (res as any).json = function (data: any) {
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify(data));
+                  return res;
+                };
+
+                await handler(req, res);
+              });
+              return;
+            }
+          } catch (e: any) {
+            console.error(`[serverless-dev] Error running API route ${apiName}:`, e);
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ success: false, error: e.message }));
+            return;
+          }
+        }
+
+        // 2. Handle Netlify functions (/.netlify/functions/*)
         if (req.url && req.url.startsWith('/.netlify/functions/')) {
           const fnName = req.url.replace('/.netlify/functions/', '').split('?')[0];
           try {
@@ -42,7 +86,7 @@ function netlifyFunctionsPlugin(): Plugin {
               return;
             }
           } catch (e: any) {
-            console.error(`[netlify-functions-dev] Error running function ${fnName}:`, e);
+            console.error(`[serverless-dev] Error running Netlify function ${fnName}:`, e);
             res.statusCode = 500;
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify({ success: false, error: e.message }));
@@ -57,7 +101,7 @@ function netlifyFunctionsPlugin(): Plugin {
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss(), netlifyFunctionsPlugin()],
+    plugins: [react(), tailwindcss(), serverlessDevPlugin()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
