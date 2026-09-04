@@ -1,0 +1,6 @@
+# Robots.txt for CodeNPixels (https://codenpixels.in)
+User-agent: *
+Allow: /
+
+# Canonical Sitemap
+Sitemap: https://codenpixels.in/sitemap.xml

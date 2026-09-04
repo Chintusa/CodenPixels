@@ -1,89 +1,181 @@
-import React from 'react';
-import { Star, Quote, ShieldCheck } from 'lucide-react';
-import { TESTIMONIALS } from '../data';
+import React, { useState, useEffect } from 'react';
+import { Star, Quote, ShieldCheck, ChevronLeft, ChevronRight, MessageSquarePlus, Sparkles } from 'lucide-react';
+import { getStoredTestimonials, STORAGE_UPDATE_EVENT } from '../utils/storage.js';
 
-export const Testimonials = () => {
+export const Testimonials = ({ onNavigate }) => {
+  const [testimonials, setTestimonials] = useState(() => getStoredTestimonials());
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  // Subscribe to storage updates so changes made in Admin reflect instantly
+  useEffect(() => {
+    const handleUpdate = () => {
+      setTestimonials(getStoredTestimonials());
+    };
+
+    window.addEventListener(STORAGE_UPDATE_EVENT, handleUpdate);
+    return () => window.removeEventListener(STORAGE_UPDATE_EVENT, handleUpdate);
+  }, []);
+
+  // Auto-play review slider
+  useEffect(() => {
+    if (!isAutoPlaying || testimonials.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, testimonials.length]);
+
+  if (testimonials.length === 0) return null;
+
+  const current = testimonials[currentIndex] || testimonials[0];
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
   return (
-    <section className="py-24 sm:py-32 bg-[#0F172A]/95 backdrop-blur-md text-white relative overflow-hidden" id="testimonials">
-      {/* Abstract atmospheric colored blur filters */}
-      <div className="absolute top-1/4 left-1/3 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
+    <section className="py-24 sm:py-32 bg-[#0F172A] text-white relative overflow-hidden" id="testimonials">
+      {/* Ambient background glows */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Grid pattern backdrop of modern SaaS sites */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
+      {/* Grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-25 pointer-events-none" />
 
-      {/* Decorative Blueprint watermark on Testimonials */}
-      <div className="absolute top-10 left-10 opacity-15 text-[#06B6D4] font-mono text-[7px] hidden lg:block pointer-events-none select-none">
-        {/* <span>[SYS_METRIC: SUCCESS_RATIO_100%] // AUTH_VALID : TRUE</span> */}
-      </div>
-
-      <div className="absolute bottom-10 right-10 opacity-10 text-primary hidden lg:block pointer-events-none select-none">
-        <svg width="120" height="40" viewBox="0 0 120 40">
-          <line x1="0" y1="20" x2="120" y2="20" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 4" />
-          <polygon points="60,15 65,25 55,25" fill="currentColor" />
-        </svg>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Heading */}
-        <div className="text-center mb-16 md:mb-20">
-          <span className="text-xs font-mono tracking-widest text-[#06B6D4] uppercase bg-secondary/10 px-3 py-1 rounded-full inline-block mb-3">
-            Client Success
+        <div className="text-center mb-14 md:mb-18">
+          <span className="text-xs font-mono tracking-widest text-secondary uppercase bg-cyan-500/10 px-3 py-1 rounded-full inline-flex items-center gap-1.5 mb-3 border border-cyan-500/20">
+            <Sparkles size={13} className="text-cyan-400" />
+            <span>Client Success Stories</span>
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold sm:font-extrabold tracking-tight text-white leading-tight">
-            Trusted By Growing Companies
+            Trusted by Founders in India & Worldwide
           </h2>
-          <p className="mt-4 text-slate-400 max-w-2xl mx-auto text-base md:text-lg">
-            Hear directly from the product managers and founders who built high-performance solutions with our engineering team.
+          <p className="mt-4 text-slate-400 max-w-2xl mx-auto text-xs sm:text-sm md:text-base lg:text-lg">
+            Real feedback from business owners, startups, and product managers who built high-performing web applications, smart menus, and digital platforms with CodeNPixels.
           </p>
         </div>
 
-        {/* Testimonials Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {TESTIMONIALS.map((testimonial) => (
-            <div
-              key={testimonial.id}
-              className="flex flex-col justify-between p-8 bg-slate-950/45 backdrop-blur-md border border-white/5 rounded-3xl relative h-full hover:border-white/20 hover:bg-slate-950/65 hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-300 group"
-            >
-              {/* Giant clean Quote graphic */}
-              <div className="absolute -top-3 -right-2 text-slate-800 opacity-20 pointer-events-none group-hover:scale-110 group-hover:text-primary transition-all duration-300">
-                <Quote size={80} className="stroke-[1.5]" />
+        {/* Highlighted Interactive Featured Review Carousel */}
+        <div
+          className="max-w-4xl mx-auto mb-16 bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative"
+          onMouseEnter={() => setIsAutoPlaying(false)}
+          onMouseLeave={() => setIsAutoPlaying(true)}
+        >
+          {/* Large decorative quote mark */}
+          <div className="absolute top-6 right-6 text-slate-800 opacity-40 pointer-events-none">
+            <Quote size={80} className="stroke-[1.5]" />
+          </div>
+
+          <div className="relative z-10">
+            {/* Top Stars & Product Tag */}
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+              <div className="flex items-center gap-1 text-amber-400">
+                {[...Array(current.rating || 5)].map((_, i) => (
+                  <Star key={i} size={18} fill="currentColor" />
+                ))}
               </div>
 
+              {current.productBuilt && (
+                <span className="px-3 py-1 bg-primary/20 border border-primary/40 text-cyan-300 text-xs font-mono font-semibold rounded-full">
+                  Delivered: {current.productBuilt}
+                </span>
+              )}
+            </div>
+
+            {/* Review Content */}
+            <blockquote className="text-lg sm:text-xl md:text-2xl text-slate-200 font-display font-medium leading-relaxed italic mb-8">
+              "{current.content}"
+            </blockquote>
+
+            {/* Client Info & Photo */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 border-t border-slate-800">
+              <div className="flex items-center gap-4">
+                <img
+                  src={current.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&h=120&q=80'}
+                  alt={current.name}
+                  className="w-14 h-14 rounded-full object-cover border-2 border-primary/50 shadow-md"
+                />
+                <div>
+                  <h3 className="font-display font-bold text-base sm:text-lg text-white flex items-center gap-1.5">
+                    <span>{current.name}</span>
+                    <ShieldCheck size={16} className="text-secondary" />
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-400">
+                    {current.role} • <span className="text-secondary font-medium">{current.company}</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Carousel Controls */}
+              <div className="flex items-center gap-2 self-end sm:self-center">
+                <button
+                  onClick={handlePrev}
+                  aria-label="Previous review"
+                  className="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl border border-slate-700 transition-colors cursor-pointer"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <span className="text-xs font-mono text-slate-400 font-semibold px-2">
+                  {currentIndex + 1} / {testimonials.length}
+                </span>
+                <button
+                  onClick={handleNext}
+                  aria-label="Next review"
+                  className="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl border border-slate-700 transition-colors cursor-pointer"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Multi-Card Grid for Browsing More Reviews */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonials.slice(0, 3).map((item) => (
+            <div
+              key={item.id}
+              className="p-6 bg-slate-950/50 backdrop-blur-md border border-slate-800/80 rounded-2xl flex flex-col justify-between hover:border-slate-700 transition-all"
+            >
               <div>
-                {/* 5-Star Ratings */}
-                <div className="flex items-center gap-1 mb-6 text-yellow-400">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} size={15} fill="currentColor" />
+                <div className="flex items-center gap-1 text-amber-400 mb-3">
+                  {[...Array(item.rating || 5)].map((_, i) => (
+                    <Star key={i} size={14} fill="currentColor" />
                   ))}
                 </div>
-
-                <p className="text-slate-300 text-sm md:text-base leading-relaxed italic relative z-10">
-                  "{testimonial.content}"
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed italic mb-4">
+                  "{item.content.length > 140 ? item.content.slice(0, 140) + '...' : item.content}"
                 </p>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-slate-800 flex items-center gap-4">
+              <div className="flex items-center gap-3 pt-4 border-t border-slate-800/80">
                 <img
-                  src={testimonial.avatar}
-                  alt={testimonial.name}
-                  referrerPolicy="no-referrer"
-                  className="w-12 h-12 rounded-full object-cover border-2 border-slate-800"
+                  src={item.avatar}
+                  alt={item.name}
+                  className="w-10 h-10 rounded-full object-cover border border-slate-700"
                 />
-                <div>
-                  <h4 className="font-display font-bold text-sm text-white flex items-center gap-1.5">
-                    {testimonial.name}
-                    <ShieldCheck size={14} className="text-[#06B6D4]" />
+                <div className="truncate">
+                  <h4 className="text-xs sm:text-sm font-bold text-white truncate flex items-center gap-1">
+                    <span>{item.name}</span>
+                    <ShieldCheck size={12} className="text-cyan-400 shrink-0" />
                   </h4>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    {testimonial.role}, <span className="text-[#06B6D4] font-medium">{testimonial.company}</span>
-                  </p>
+                  <p className="text-[11px] text-slate-400 truncate">{item.company}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );

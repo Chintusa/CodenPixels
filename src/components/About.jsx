@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Target, Eye, CodeXml, Shield, Server, Zap, Cpu, ArrowUpRight } from 'lucide-react';
 
-export const About = ({ setActiveTab }) => {
+export const About = ({ onNavigate, isStandalone = false }) => {
   const [activeStorySegment, setActiveStorySegment] = useState('origin');
+
+  const HeadingTag = isStandalone ? 'h1' : 'h2';
 
   const storySegments = {
     origin: {
@@ -83,9 +85,9 @@ export const About = ({ setActiveTab }) => {
             <span className="text-xs font-mono tracking-widest text-[#2563EB] uppercase bg-primary/10 px-3 py-1 rounded-full inline-block mb-3">
               About CodenPixels
             </span>
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-display font-bold sm:font-extrabold tracking-tight text-slate-900 leading-tight">
+            <HeadingTag className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-display font-bold sm:font-extrabold tracking-tight text-slate-900 leading-tight">
               A High-Precision Digital Engineering Agency
-            </h2>
+            </HeadingTag>
           </div>
           <div>
             <p className="text-slate-500 text-sm sm:text-base md:text-lg leading-relaxed">

@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ExternalLink, CheckCircle, Info, X } from 'lucide-react';
-import { PROJECTS } from '../data';
+import { getStoredProjects, STORAGE_UPDATE_EVENT } from '../utils/storage';
 
-export const Projects = () => {
+export const Projects = ({ onNavigate, isStandalone = false }) => {
+  const [projects, setProjects] = useState(() => getStoredProjects());
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const categories = ['All', 'Frontend', 'Full Stack'];
+  useEffect(() => {
+    const handleStorageUpdate = () => {
+      setProjects(getStoredProjects());
+    };
+    window.addEventListener(STORAGE_UPDATE_EVENT, handleStorageUpdate);
+    return () => window.removeEventListener(STORAGE_UPDATE_EVENT, handleStorageUpdate);
+  }, []);
 
-  const filteredProjects = PROJECTS.filter((proj) => {
+  const categories = ['All', ...new Set(projects.map(p => p.category).filter(Boolean))];
+
+  const filteredProjects = projects.filter((proj) => {
     if (activeCategory === 'All') return true;
     return proj.category === activeCategory;
   });
+
 
   const openLivePreview = (url) => {
     if (!url) return;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
+
+  const HeadingTag = isStandalone ? 'h1' : 'h2';
 
   return (
    <section className="pt-0 pb-8 sm:pt-4 sm:pb-16 md:pt-8 md:pb-24 lg:pt-10 lg:pb-28 bg-transparent relative overflow-hidden" id="projects">
@@ -47,9 +59,9 @@ export const Projects = () => {
             Our Digital Innovations
           </span>
 
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-display font-bold sm:font-extrabold tracking-tight text-slate-900 leading-tight">
+          <HeadingTag className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-display font-bold sm:font-extrabold tracking-tight text-slate-900 leading-tight">
             Engineered Masterpieces
-          </h2>
+          </HeadingTag>
 
           <p className="mt-4 text-slate-500 max-w-2xl mx-auto text-xs sm:text-sm md:text-base lg:text-lg">
             Explore a curated selection of responsive websites, AI-powered apps,

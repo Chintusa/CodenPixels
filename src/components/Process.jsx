@@ -4,7 +4,7 @@ import { CheckCircle, ArrowRight } from 'lucide-react';
 import { PROCESS_STEPS } from '../data';
 import LucideIcon from './LucideIcon';
 
-export const Process = () => {
+export const Process = ({ onNavigate, isStandalone = false }) => {
   const [activeStep, setActiveStep] = useState(1);
 
   const totalSteps = PROCESS_STEPS.length;
@@ -16,6 +16,8 @@ export const Process = () => {
   const nextStep = PROCESS_STEPS.find(
     stepItem => stepItem.step === activeStep + 1
   );
+
+  const HeadingTag = isStandalone ? 'h1' : 'h2';
 
   return (
    <section className="pt-0 pb-8 sm:pt-4 sm:pb-16 md:pt-8 md:pb-24 lg:pt-10 lg:pb-28 bg-transparent relative overflow-hidden" id="process">
@@ -66,9 +68,9 @@ MON: OK`}</pre>
             Our Work Workflow
           </span>
 
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-display font-bold sm:font-extrabold tracking-tight text-slate-900 leading-tight">
-            A Transparent 7-Step Development Journey
-          </h2>
+          <HeadingTag className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-display font-bold sm:font-extrabold tracking-tight text-slate-900 leading-tight">
+            Our 7-Step Development Process
+          </HeadingTag>
 
           <p className="mt-4 text-slate-500 max-w-2xl mx-auto text-xs sm:text-sm md:text-base lg:text-lg">
             How we translate your conceptual briefs into production-grade,
