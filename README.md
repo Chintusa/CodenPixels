@@ -164,7 +164,7 @@ This project is configured for one-click deployment on **Netlify**:
 
 - **Website**: [https://codenpixels.in](https://codenpixels.in)
 - **Email**: [codenpixel.2022@gmail.com](mailto:codenpixel.2022@gmail.com)
-- **Location**: Hyderabad, Telangana, India
+- **Location**: Bhubaneswar, Odisha, India
 
 ---
 
